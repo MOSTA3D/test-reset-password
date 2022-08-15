@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.testSecurity.demo.dto.MessageResponse;
 import com.testSecurity.demo.dto.ForgotBody;
 import com.testSecurity.demo.dto.ResetBody;
 import com.testSecurity.demo.service.UserService;
@@ -24,14 +25,14 @@ public class PasswordController {
 	private UserService userService;
 	
 	@PostMapping(path="/forgot")
-	public ResponseEntity<Object> forgotPassword(@RequestBody ForgotBody fBody, HttpServletRequest request) {
+	public ResponseEntity<MessageResponse> forgotPassword(@RequestBody ForgotBody fBody, HttpServletRequest request) {
 		userService.sendResetLink(fBody.getEmail(), request.getRemoteHost());
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(new MessageResponse("message", "We sent you an email"),HttpStatus.OK);
 	}
 	
-	@PutMapping(path="/reset")
-	public ResponseEntity<Object> updatePassword(@RequestBody ResetBody resetBody){
+	@PostMapping(path="/reset")
+	public ResponseEntity<MessageResponse> updatePassword(@RequestBody ResetBody resetBody){
 		userService.resetPassword(resetBody.getResetToken(), resetBody.getPassword());
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(new MessageResponse("message", "Password changed successfully"),HttpStatus.OK);
 	}
 }

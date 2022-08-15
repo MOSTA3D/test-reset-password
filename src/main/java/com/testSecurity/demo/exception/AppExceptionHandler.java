@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.testSecurity.demo.dto.ErrorResponse;
+import com.testSecurity.demo.dto.MessageResponse;
 
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler{	
 	@ExceptionHandler(value = {UserException.class})
 	public ResponseEntity<Object> handleException(UserException e, WebRequest request){
 		String message = e.getLocalizedMessage();
-		return new ResponseEntity<>(new ErrorResponse(message), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(new MessageResponse("error", message), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

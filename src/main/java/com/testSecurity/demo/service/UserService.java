@@ -24,10 +24,11 @@ public class UserService {
 		String token = RandomString.make(45);
 		String resetLink = host + "/reset_password?token=" + token;
 		
-		String mailBody = "<h2>Reset Password Request</h2>" + 
-				 		  "<p>Please visit <a href=\"" + resetLink + "\"> </a> to reset your password </p>";
-		
+			
 		String mailSubject = "Reset password request";
+		String mailBody = "<h2>Reset Password Request</h2>" + 
+		 		  		  "<p>Please visit <a href=\"http://" + resetLink + "\"> <bold>this link</bold> </a> to reset your password </p>";
+
 		
 		Optional<UserEntity> userReturnedOptional = userRepo.findByEmail(email);
 		if(userReturnedOptional.isEmpty()) {
@@ -43,9 +44,12 @@ public class UserService {
 	
 	public void resetPassword(String newPassword, String resetToken) {
 		Optional<UserEntity> userReturnedOptional = userRepo.findByResetToken(resetToken);
+
 		if(userReturnedOptional.isEmpty()) {
 			throw new UserException("You are not authorized to make this operation");
 		}
+		
+		System.out.println("after throwing ");
 		
 		UserEntity userReturned = userReturnedOptional.get();
 		

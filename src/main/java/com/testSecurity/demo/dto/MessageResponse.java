@@ -1,11 +1,22 @@
 package com.testSecurity.demo.dto;
 
-public class ErrorResponse {
+public class MessageResponse {
+	private String type;
+
 	private String message;
 	
-	public ErrorResponse() {}
+	public MessageResponse() {}
 
-	public ErrorResponse(String message) {
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public MessageResponse(String type, String message) {
+		this.type = type;
 		if(message != null) this.message = message;
 		else this.message = "error";
 	}
