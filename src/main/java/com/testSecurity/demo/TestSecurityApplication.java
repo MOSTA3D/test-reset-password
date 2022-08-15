@@ -8,6 +8,7 @@ public class TestSecurityApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TestSecurityApplication.class, args);
+		System.out.println("SERVER INIT...");
 	}
 
 }
